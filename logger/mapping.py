@@ -1,4 +1,4 @@
-"""Pure mapping: van/<domain>/<id>/<property> MQTT message -> InfluxDB point.
+"""Pure mapping: renewvan/<domain>/<id>/<property> MQTT message -> InfluxDB point.
 
 No network, no broker, no InfluxDB client — this is the seam the ticket's
 acceptance criteria unit-test against fixture topics/payloads. The thin
@@ -51,12 +51,12 @@ def _decode(payload: str):
 
 
 def topic_to_point(topic: str, payload: str) -> Point | None:
-    """Map one van-bus MQTT message to an InfluxDB `Point`, or `None` if
+    """Map one renewvan-bus MQTT message to an InfluxDB `Point`, or `None` if
     this topic/property isn't logged (unknown domain/property, or an
     excluded tank identity field).
     """
     parts = topic.split("/")
-    if len(parts) != 4 or parts[0] != "van":
+    if len(parts) != 4 or parts[0] != "renewvan":
         return None
     _, domain, entity_id, prop = parts
 

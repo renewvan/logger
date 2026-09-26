@@ -1,7 +1,7 @@
 # logger
 
-`van/#` → InfluxDB point writer for the renewvan hub. Subscribes every
-topic on the van bus and writes one InfluxDB point per MQTT message
+`renewvan/#` → InfluxDB point writer for the renewvan hub. Subscribes every
+topic on the renewvan bus and writes one InfluxDB point per MQTT message
 received — no fixed-interval sampling, no downsampling, no batching/rollup
 logic. Per `hub/.scratch/renewvan-hub-v0-build/issues/05-influxdb-logger.md`.
 
@@ -33,7 +33,7 @@ All config is environment variables (matches `hub`'s
 
 | Variable | Default | Notes |
 |---|---|---|
-| `MQTT_HOST` | `mosquitto` | Van bus broker |
+| `MQTT_HOST` | `mosquitto` | Renewvan bus broker |
 | `MQTT_PORT` | `1883` | |
 | `MQTT_USERNAME` | _(none)_ | |
 | `MQTT_PASSWORD` | _(none)_ | |

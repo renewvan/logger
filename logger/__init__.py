@@ -1,1 +1,1 @@
-"""renewvan/logger: van/# -> InfluxDB point writer."""
+"""renewvan/logger: renewvan/# -> InfluxDB point writer."""

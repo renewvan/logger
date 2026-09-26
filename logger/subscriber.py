@@ -1,4 +1,4 @@
-"""Persistent MQTT subscription on `van/#`: every message received is run
+"""Persistent MQTT subscription on `renewvan/#`: every message received is run
 through `mapping.topic_to_point` and, if it maps to a point, written
 immediately — no sampling, no batching. Thin I/O adapter around paho-mqtt;
 not unit-tested (see mapping.py for the tested seam).
@@ -15,7 +15,7 @@ from logger.writer import Writer
 
 logger = logging.getLogger(__name__)
 
-VAN_BUS_WILDCARD = "van/#"
+VAN_BUS_WILDCARD = "renewvan/#"
 
 
 class Subscriber:

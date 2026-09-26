@@ -11,7 +11,7 @@ from logger.writer import Writer
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="renewvan/logger: van/# -> InfluxDB point writer")
+    parser = argparse.ArgumentParser(description="renewvan/logger: renewvan/# -> InfluxDB point writer")
     parser.add_argument("-d", "--debug", action="store_true", help="Enable debug logging")
     args = parser.parse_args()
 
