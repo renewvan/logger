@@ -5,7 +5,7 @@ acceptance criteria unit-test against fixture topics/payloads. The thin
 MQTT/InfluxDB I/O adapters (subscriber.py, writer.py) call this and are not
 unit-tested themselves (docs/porting pattern: seam is the pure function).
 
-One InfluxDB measurement per entity type (tank/relay/battery), tagged by
+One InfluxDB measurement per entity type (tank/relay/battery/router), tagged by
 `id` (the topic's <id> segment). Field whitelist per measurement below is
 the single source of truth for what gets logged; `tank.fluid_type`/
 `capacity_l` are deliberately absent — they're static identity config, not
@@ -35,6 +35,17 @@ _FIELDS: dict[str, dict[str, type]] = {
         "power_w": float,
         "temperature_c": float,
         "charge_state": str,
+    },
+    "router": {
+        "signal_rsrp_dbm": float,
+        "signal_rsrq_db": float,
+        "signal_sinr_db": float,
+        "signal_rssi_dbm": float,
+        "operator": str,
+        "network_type": str,
+        "uptime_s": float,
+        "data_used_month_tx_b": float,
+        "data_used_month_rx_b": float,
     },
 }
 

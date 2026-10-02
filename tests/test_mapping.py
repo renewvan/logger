@@ -64,6 +64,38 @@ def test_battery_charge_state_is_a_string_field():
     assert 'charge_state="absorption"' in line
 
 
+def test_router_signal_fields_map_to_router_measurement():
+    fixtures = [
+        (fx.ROUTER_SIGNAL_RSRP_DBM, "signal_rsrp_dbm=-85"),
+        (fx.ROUTER_SIGNAL_RSRQ_DB, "signal_rsrq_db=-10"),
+        (fx.ROUTER_SIGNAL_SINR_DB, "signal_sinr_db=6"),
+        (fx.ROUTER_SIGNAL_RSSI_DBM, "signal_rssi_dbm=-54"),
+        (fx.ROUTER_UPTIME_S, "uptime_s=826671"),
+        (fx.ROUTER_DATA_TX_B, "data_used_month_tx_b=140194858"),
+        (fx.ROUTER_DATA_RX_B, "data_used_month_rx_b=385092522"),
+    ]
+    for (topic, payload), expected_field in fixtures:
+        point = topic_to_point(topic, payload)
+        line = point.to_line_protocol()
+        assert line.startswith("router,id=main ")
+        assert expected_field in line
+
+
+def test_router_operator_and_network_type_are_string_fields():
+    for (topic, payload), expected in [
+        (fx.ROUTER_OPERATOR, 'operator="26203"'),
+        (fx.ROUTER_NETWORK_TYPE, 'network_type="lte"'),
+    ]:
+        point = topic_to_point(topic, payload)
+        line = point.to_line_protocol()
+        assert line.startswith("router,id=main ")
+        assert expected in line
+
+
+def test_router_raw_payload_is_not_logged():
+    assert topic_to_point(*fx.ROUTER_RAW) is None
+
+
 def test_unknown_domain_is_not_logged():
     assert topic_to_point(*fx.UNKNOWN_DOMAIN) is None
 

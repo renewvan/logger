@@ -23,6 +23,21 @@ BATTERY_POWER_W = ("renewvan/battery/house/power_w", "-60.3")
 BATTERY_TEMPERATURE_C = ("renewvan/battery/house/temperature_c", "21.5")
 BATTERY_CHARGE_STATE = ("renewvan/battery/house/charge_state", '"absorption"')
 
+# Router (values from the live capture, hub/.scratch/node-router/).
+ROUTER_SIGNAL_RSRP_DBM = ("renewvan/router/main/signal_rsrp_dbm", "-85")
+ROUTER_SIGNAL_RSRQ_DB = ("renewvan/router/main/signal_rsrq_db", "-10")
+ROUTER_SIGNAL_SINR_DB = ("renewvan/router/main/signal_sinr_db", "6")
+ROUTER_SIGNAL_RSSI_DBM = ("renewvan/router/main/signal_rssi_dbm", "-54")
+ROUTER_OPERATOR = ("renewvan/router/main/operator", '"26203"')
+ROUTER_NETWORK_TYPE = ("renewvan/router/main/network_type", '"lte"')
+ROUTER_UPTIME_S = ("renewvan/router/main/uptime_s", "826671")
+ROUTER_DATA_TX_B = ("renewvan/router/main/data_used_month_tx_b", "140194858")
+ROUTER_DATA_RX_B = ("renewvan/router/main/data_used_month_rx_b", "385092522")
+
+# The RUT's raw vendor payload — deliberately not logged (what keeps vendor
+# JSON out of InfluxDB).
+ROUTER_RAW = ("renewvan/router/main/raw", '{"gsm":{"rsrp":-85}}')
+
 # Unrecognized domain/topic shape.
 UNKNOWN_DOMAIN = ("renewvan/climate/cabin/temperature_c", "22.0")
 MALFORMED_TOPIC = ("renewvan/tank/fresh", "1")
