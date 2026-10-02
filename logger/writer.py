@@ -2,6 +2,7 @@
 mapping/adapter seam (see mapping.py). Not unit-tested; a real/dockerized
 InfluxDB instance is a manual/smoke check, not a unit-test target.
 """
+
 from __future__ import annotations
 
 import logging

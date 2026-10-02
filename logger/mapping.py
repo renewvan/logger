@@ -11,6 +11,7 @@ the single source of truth for what gets logged; `tank.fluid_type`/
 `capacity_l` are deliberately absent — they're static identity config, not
 time-series history, so a message for either property maps to no point.
 """
+
 from __future__ import annotations
 
 import json

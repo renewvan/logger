@@ -3,6 +3,7 @@ through `mapping.topic_to_point` and, if it maps to a point, written
 immediately — no sampling, no batching. Thin I/O adapter around paho-mqtt;
 not unit-tested (see mapping.py for the tested seam).
 """
+
 from __future__ import annotations
 
 import logging

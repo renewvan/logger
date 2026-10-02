@@ -1,6 +1,7 @@
 """Fixture-topic/payload tests for the MQTT-message -> InfluxDB-point
 mapping — no live broker or InfluxDB instance required.
 """
+
 from logger.mapping import topic_to_point
 from tests.fixtures import messages as fx
 

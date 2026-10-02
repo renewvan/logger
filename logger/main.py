@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """renewvan/logger entrypoint."""
+
 from __future__ import annotations
 
 import argparse
@@ -11,7 +12,9 @@ from logger.writer import Writer
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="renewvan/logger: renewvan/# -> InfluxDB point writer")
+    parser = argparse.ArgumentParser(
+        description="renewvan/logger: renewvan/# -> InfluxDB point writer"
+    )
     parser.add_argument("-d", "--debug", action="store_true", help="Enable debug logging")
     args = parser.parse_args()
 

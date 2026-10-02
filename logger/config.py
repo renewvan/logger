@@ -2,6 +2,7 @@
 `docker-compose-truenas.yml` `logger:` service block, the single contract
 between this repo and the deployment manifest.
 """
+
 from __future__ import annotations
 
 import os
