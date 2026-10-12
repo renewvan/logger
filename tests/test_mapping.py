@@ -64,6 +64,54 @@ def test_battery_charge_state_is_a_string_field():
     assert 'charge_state="absorption"' in line
 
 
+def test_cleared_retained_topic_is_not_logged():
+    # A node clears a retained topic with an empty payload when a reading stops being valid
+    # (e.g. Venus sends null for charge_state). That means "no value", not a data point.
+    assert topic_to_point("renewvan/battery/290/charge_state", "") is None
+    assert topic_to_point("renewvan/battery/290/soc_pct", "") is None
+
+
+def test_battery_optional_time_fields_are_logged():
+    point = topic_to_point("renewvan/battery/290/time_since_full_charge_s", "169036")
+    assert point.to_line_protocol().startswith("battery,id=290 ")
+    assert "time_since_full_charge_s=169036" in point.to_line_protocol()
+    point = topic_to_point("renewvan/battery/290/time_to_go_s", "98400.0")
+    assert "time_to_go_s=98400" in point.to_line_protocol()
+
+
+def test_solar_fields_map_to_solar_measurement():
+    fixtures = [
+        ("power_w", "14.0", "power_w=14"),
+        ("battery_voltage_v", "13.44", "battery_voltage_v=13.44"),
+        ("battery_current_a", "1.4", "battery_current_a=1.4"),
+        ("pv_voltage_v", "47.5", "pv_voltage_v=47.5"),
+        ("pv_current_a", "0.3", "pv_current_a=0.3"),
+        ("yield_today_wh", "120.0", "yield_today_wh=120"),
+    ]
+    for prop, payload, expected_field in fixtures:
+        line = topic_to_point(f"renewvan/solar/291/{prop}", payload).to_line_protocol()
+        assert line.startswith("solar,id=291 ")
+        assert expected_field in line
+    line = topic_to_point("renewvan/solar/291/charge_state", '"bulk"').to_line_protocol()
+    assert 'charge_state="bulk"' in line
+
+
+def test_charger_fields_map_to_charger_measurement():
+    fixtures = [
+        ("voltage_v", "13.39", "voltage_v=13.39"),
+        ("current_a", "18.2", "current_a=18.2"),
+        ("power_w", "243", "power_w=243"),
+        ("input_voltage_v", "12.54", "input_voltage_v=12.54"),
+    ]
+    for prop, payload, expected_field in fixtures:
+        line = topic_to_point(f"renewvan/charger/288/{prop}", payload).to_line_protocol()
+        assert line.startswith("charger,id=288 ")
+        assert expected_field in line
+    for prop, payload in [("source", '"alternator"'), ("charge_state", '"absorption"')]:
+        line = topic_to_point(f"renewvan/charger/288/{prop}", payload).to_line_protocol()
+        assert f'{prop}="' in line
+
+
 def test_router_signal_fields_map_to_router_measurement():
     fixtures = [
         (fx.ROUTER_SIGNAL_RSRP_DBM, "signal_rsrp_dbm=-85"),

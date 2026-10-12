@@ -34,6 +34,25 @@ _FIELDS: dict[str, dict[str, type]] = {
         "current_a": float,
         "power_w": float,
         "temperature_c": float,
+        "time_to_go_s": float,
+        "time_since_full_charge_s": float,
+        "charge_state": str,
+    },
+    "solar": {
+        "power_w": float,
+        "battery_voltage_v": float,
+        "battery_current_a": float,
+        "pv_voltage_v": float,
+        "pv_current_a": float,
+        "yield_today_wh": float,
+        "charge_state": str,
+    },
+    "charger": {
+        "voltage_v": float,
+        "current_a": float,
+        "power_w": float,
+        "input_voltage_v": float,
+        "source": str,
         "charge_state": str,
     },
     "router": {
@@ -64,9 +83,15 @@ def _decode(payload: str):
 
 def topic_to_point(topic: str, payload: str) -> Point | None:
     """Map one renewvan-bus MQTT message to an InfluxDB `Point`, or `None` if
-    this topic/property isn't logged (unknown domain/property, or an
-    excluded tank identity field).
+    this topic/property isn't logged (unknown domain/property, an excluded
+    tank identity field, or a cleared retained topic).
+
+    An empty payload is how a node clears a retained topic when a reading
+    stops being valid. It means "no value", so it is never logged: left
+    alone, string fields would be written as `""`.
     """
+    if not payload:
+        return None
     parts = topic.split("/")
     if len(parts) != 4 or parts[0] != "renewvan":
         return None
