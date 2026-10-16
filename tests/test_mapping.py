@@ -150,3 +150,45 @@ def test_unknown_domain_is_not_logged():
 
 def test_malformed_topic_is_not_logged():
     assert topic_to_point(*fx.MALFORMED_TOPIC) is None
+
+
+# --- demo namespace -----------------------------------------------------------------------------
+# The hub's simulated van is published under `renewvan/demo/...`, i.e. INSIDE the `renewvan/#`
+# subscription this logger holds (hub docs/demo-mode.md). Nothing simulated may ever be written to
+# InfluxDB: it would sit in the real van's history next to real readings.
+
+
+def _logged_properties():
+    from logger.mapping import _FIELDS
+
+    return [(domain, prop) for domain, props in _FIELDS.items() for prop in props]
+
+
+def test_every_logged_property_is_dropped_under_the_demo_namespace():
+    """Derived from the logger's own field table, so a newly logged property is covered too."""
+    cases = _logged_properties()
+    assert cases, "the logger logs at least one property"
+    for domain, prop in cases:
+        for payload in ("1", "true", '"ok"', "12.5"):
+            assert topic_to_point(f"renewvan/demo/{domain}/house/{prop}", payload) is None, (
+                domain,
+                prop,
+            )
+
+
+def test_the_demo_switch_and_health_topics_are_not_logged():
+    for topic in (
+        "renewvan/demo/enabled",
+        "renewvan/demo/enabled/set",
+        "renewvan/demo/health",
+        "renewvan/demo/router/health",
+    ):
+        assert topic_to_point(topic, "true") is None, topic
+
+
+def test_demo_is_not_a_logged_domain():
+    """A real entity whose domain slot said `demo` would otherwise be a four-segment match."""
+    from logger.mapping import _FIELDS
+
+    assert "demo" not in _FIELDS
+    assert topic_to_point("renewvan/demo/level_pct", "50") is None
