@@ -65,7 +65,7 @@ def test_battery_charge_state_is_a_string_field():
 
 
 def test_cleared_retained_topic_is_not_logged():
-    # A node clears a retained topic with an empty payload when a reading stops being valid
+    # A device clears a retained topic with an empty payload when a reading stops being valid
     # (e.g. Venus sends null for charge_state). That means "no value", not a data point.
     assert topic_to_point("renewvan/battery/290/charge_state", "") is None
     assert topic_to_point("renewvan/battery/290/soc_pct", "") is None

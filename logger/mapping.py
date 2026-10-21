@@ -86,7 +86,7 @@ def topic_to_point(topic: str, payload: str) -> Point | None:
     this topic/property isn't logged (unknown domain/property, an excluded
     tank identity field, or a cleared retained topic).
 
-    An empty payload is how a node clears a retained topic when a reading
+    An empty payload is how a device clears a retained topic when a reading
     stops being valid. It means "no value", so it is never logged: left
     alone, string fields would be written as `""`.
     """
