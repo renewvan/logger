@@ -64,8 +64,26 @@ def test_battery_charge_state_is_a_string_field():
     assert 'charge_state="absorption"' in line
 
 
+def test_entity_identity_strings_driver_and_name_are_not_logged():
+    # Every entity instance publishes retained `driver` / `name` strings; they identify the
+    # instance, they are not time-series readings, so they must never become fields.
+    for domain, entity_id in [
+        ("tank", "fresh"),
+        ("relay", "1"),
+        ("battery", "512"),
+        ("solar", "290"),
+        ("charger", "mains"),
+        ("router", "main"),
+        ("gps", "main"),
+        ("temperature", "cabin"),
+        ("tilt", "main"),
+    ]:
+        assert topic_to_point(f"renewvan/{domain}/{entity_id}/driver", '"venus"') is None
+        assert topic_to_point(f"renewvan/{domain}/{entity_id}/name", '"House battery"') is None
+
+
 def test_cleared_retained_topic_is_not_logged():
-    # A device clears a retained topic with an empty payload when a reading stops being valid
+    # A driver clears a retained topic with an empty payload when a reading stops being valid
     # (e.g. Venus sends null for charge_state). That means "no value", not a data point.
     assert topic_to_point("renewvan/battery/290/charge_state", "") is None
     assert topic_to_point("renewvan/battery/290/soc_pct", "") is None

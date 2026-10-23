@@ -9,7 +9,9 @@ One InfluxDB measurement per entity type (tank/relay/battery/router), tagged by
 `id` (the topic's <id> segment). Field whitelist per measurement below is
 the single source of truth for what gets logged; `tank.fluid_type`/
 `capacity_l` are deliberately absent — they're static identity config, not
-time-series history, so a message for either property maps to no point.
+time-series history, so a message for either property maps to no point. The
+same holds for the retained identity strings every entity instance carries
+(`driver`, `name`): they are not in the whitelist, so they never become fields.
 """
 
 from __future__ import annotations
@@ -86,7 +88,7 @@ def topic_to_point(topic: str, payload: str) -> Point | None:
     this topic/property isn't logged (unknown domain/property, an excluded
     tank identity field, or a cleared retained topic).
 
-    An empty payload is how a device clears a retained topic when a reading
+    An empty payload is how a driver clears a retained topic when a reading
     stops being valid. It means "no value", so it is never logged: left
     alone, string fields would be written as `""`.
     """
