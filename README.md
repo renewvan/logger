@@ -7,17 +7,20 @@ logic. Per `hub/.scratch/renewvan-hub-v0-build/issues/05-influxdb-logger.md`.
 
 ## Mapping
 
-One InfluxDB measurement per entity type (`tank`, `relay`, `battery`),
-tagged by `id` (the topic's `<id>` path segment):
+One InfluxDB measurement per entity type (`tank`, `relay`, `battery`,
+`solar`, `charger`, `router`, `temperature`), tagged by `id` (the topic's
+`<id>` path segment):
 
 | Measurement | Fields logged |
 |---|---|
 | `tank` | `level_pct`, `status` |
 | `relay` | `state` |
 | `battery` | `soc_pct`, `voltage_v`, `current_a`, `power_w`, `temperature_c`, `charge_state` |
+| `temperature` | `temperature_c`, `status` |
 
-`tank.fluid_type`/`capacity_l` are **not** logged as time-series points —
-they're static identity config (fluid type, tank capacity), not history.
+`tank.fluid_type`/`capacity_l` and `temperature.unit` (a display
+preference, C/F) are **not** logged as time-series points —
+they're static identity config, not history.
 Any other topic (unrecognized domain, unrecognized property, malformed
 topic shape) is silently dropped.
 

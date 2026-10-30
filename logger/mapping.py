@@ -68,6 +68,10 @@ _FIELDS: dict[str, dict[str, type]] = {
         "data_used_month_tx_b": float,
         "data_used_month_rx_b": float,
     },
+    "temperature": {
+        "temperature_c": float,
+        "status": str,
+    },
 }
 
 
