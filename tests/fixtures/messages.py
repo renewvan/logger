@@ -38,6 +38,13 @@ ROUTER_DATA_RX_B = ("renewvan/router/main/data_used_month_rx_b", "385092522")
 # JSON out of InfluxDB).
 ROUTER_RAW = ("renewvan/router/main/raw", '{"gsm":{"rsrp":-85}}')
 
+# Temperature probe (DS18B20 / Pi CPU, renewvan/driver-temperature).
+TEMPERATURE_C = ("renewvan/temperature/fridge/temperature_c", "4.2")
+TEMPERATURE_STATUS = ("renewvan/temperature/fridge/status", '"ok"')
+
+# Excluded temperature identity fields — static config, not time-series history.
+TEMPERATURE_UNIT = ("renewvan/temperature/fridge/unit", '"F"')
+
 # Unrecognized domain/topic shape.
 UNKNOWN_DOMAIN = ("renewvan/climate/cabin/temperature_c", "22.0")
 MALFORMED_TOPIC = ("renewvan/tank/fresh", "1")

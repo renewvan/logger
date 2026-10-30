@@ -162,6 +162,20 @@ def test_router_raw_payload_is_not_logged():
     assert topic_to_point(*fx.ROUTER_RAW) is None
 
 
+def test_temperature_fields_map_to_temperature_measurement():
+    point = topic_to_point(*fx.TEMPERATURE_C)
+    line = point.to_line_protocol()
+    assert line.startswith("temperature,id=fridge ")
+    assert "temperature_c=4.2" in line
+    point = topic_to_point(*fx.TEMPERATURE_STATUS)
+    assert 'status="ok"' in point.to_line_protocol()
+
+
+def test_temperature_unit_is_not_logged():
+    # Display preference (C/F), not a time-series reading.
+    assert topic_to_point(*fx.TEMPERATURE_UNIT) is None
+
+
 def test_unknown_domain_is_not_logged():
     assert topic_to_point(*fx.UNKNOWN_DOMAIN) is None
 
