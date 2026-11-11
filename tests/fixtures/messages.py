@@ -23,7 +23,7 @@ BATTERY_POWER_W = ("renewvan/battery/house/power_w", "-60.3")
 BATTERY_TEMPERATURE_C = ("renewvan/battery/house/temperature_c", "21.5")
 BATTERY_CHARGE_STATE = ("renewvan/battery/house/charge_state", '"absorption"')
 
-# Router (values from the live capture, hub/.scratch/node-router/).
+# Router (values from the live capture).
 ROUTER_SIGNAL_RSRP_DBM = ("renewvan/router/main/signal_rsrp_dbm", "-85")
 ROUTER_SIGNAL_RSRQ_DB = ("renewvan/router/main/signal_rsrq_db", "-10")
 ROUTER_SIGNAL_SINR_DB = ("renewvan/router/main/signal_sinr_db", "6")
