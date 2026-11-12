@@ -3,7 +3,7 @@
 `renewvan/#` → InfluxDB point writer for the renewvan hub. Subscribes every
 topic on the renewvan bus and writes one InfluxDB point per MQTT message
 received — no fixed-interval sampling, no downsampling, no batching/rollup
-logic. Per `hub/.scratch/renewvan-hub-v0-build/issues/05-influxdb-logger.md`.
+logic.
 
 ## Mapping
 
