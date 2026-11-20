@@ -1,7 +1,7 @@
 [project]
 name = "logger"
 version = "0.1.0"
-description = "van/# MQTT -> InfluxDB point writer for the renewvan hub"
+description = "van/# MQTT -> InfluxDB point writer for the Renewvan hub"
 requires-python = ">=3.11"
 dependencies = [
     "paho-mqtt>=1.6,<2",
